@@ -1,0 +1,125 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Blog</title>
+    <link rel="stylesheet" href="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css' %}">
+    <script src="{% static 'plugin/jquery-3.4.1/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js' %}"></script>
+    <style>
+        body {
+            background: linear-gradient(to right, #f4f4f4, white);
+        }
+
+        .avatar {
+            width: 35px; /* 调整为所需的大小 */
+            height: 35px;
+            border-radius: 50%; /* 使其成为圆形 */
+            background-color: #007bff; /* 选择一个合适的背景颜色 */
+            color: white; /* 字体颜色 */
+            display: flex; /* 以下几行是为了居中昵称的第一个字母 */
+            justify-content: center;
+            align-items: center;
+            font-weight: bold; /* 加粗字母 */
+            font-size: 1.2em; /* 调整字母的大小 */
+        }
+
+        .nav-item.dropdown .nav-link.dropdown-toggle::before,
+        .nav-item.dropdown .nav-link.dropdown-toggle::after {
+            display: none;
+        }
+    </style>
+    {% block css %}
+
+    {% endblock %}
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Navbar</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="{% url 'index' %}">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                       aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled">Disabled</a>
+                </li>
+            </ul>
+            <form class="d-flex" role="search">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success" type="submit">Search</button>
+            </form>
+
+
+            <ul class="navbar-nav">
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <!-- 如果用户有头像，显示头像。否则显示首字母作为代替 -->
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            {% if request.user.avatar %}
+                                <img src="{{ request.user.avatar.url }}" alt="{{ request.user.username }}"
+                                     class="user-avatar">
+                            {% else %}
+                                <div class="avatar">{{ request.user.username|upper|first }}</div>
+                            {% endif %}
+                        </a>
+                        <!-- 下拉菜单内容 -->
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">退出登录</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">登 录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'register' %}">注 册</a>
+                    </li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+</nav>
+{% block content %}
+
+{% endblock %}
+
+
+{% block js %}
+
+{% endblock %}
+</body>
+</html>

@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,9 @@ STATICFILES_DIRS = [BASE_DIR, 'static']
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR, 'media'
+
+# 指定自定义用户模型
+AUTH_USER_MODEL = 'user.Users'
+
+# 自定义用户认证
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
