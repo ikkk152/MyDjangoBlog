@@ -1,6 +1,7 @@
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView, LogoutView
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import CreateView
@@ -38,3 +39,8 @@ class UserLoginView(LoginView):
 
     def form_invalid(self, form):
         return JsonResponse({'success': False, 'errors': form.errors})
+
+
+def user_logout(request):
+    logout(request)
+    return redirect('index')
