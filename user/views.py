@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.views import View
-from django.views.generic import CreateView
+from django.views.generic import CreateView, DetailView
 from django_redis import get_redis_connection
 from user import forms
 from user.forms import CustomAuthenticationForm, RegisterModelForm
@@ -82,3 +82,7 @@ class SendCode(View):
                   fail_silently=False
                   )
         return JsonResponse({'success': True})
+
+
+class UserDetail(DetailView):
+    pass

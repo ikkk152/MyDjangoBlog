@@ -8,11 +8,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Blog</title>
     <link rel="stylesheet" href="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'plugin/fontawesome-free-6.4.0-web/css/all.css' %}">
     <script src="{% static 'plugin/jquery-3.4.1/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js' %}"></script>
     <style>
         body {
             background: linear-gradient(to right, #f4f4f4, white);
+        }
+
+        a {
+            text-decoration: none;
         }
 
         .avatar {
@@ -84,8 +89,8 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
                             {% if request.user.avatar %}
-                                <img src="{{ request.user.avatar.url }}" alt="{{ request.user.username }}"
-                                     class="user-avatar">
+                                <img src="{{ request.user.avatar }}" alt="{{ request.user.username }}"
+                                     class="avatar">
                             {% else %}
                                 <div class="avatar">{{ request.user.username|upper|first }}</div>
                             {% endif %}
