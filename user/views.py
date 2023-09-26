@@ -1,19 +1,18 @@
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView
+from django.conf import settings
+from django.contrib.auth import login, logout
+from django.contrib.auth.views import LoginView, LogoutView
 from django.http import JsonResponse
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
-<<<<<<< Updated upstream
-from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import CreateView
-
-=======
 from django.views import View
 from django.views.generic import CreateView, DetailView
 from django_redis import get_redis_connection
->>>>>>> Stashed changes
 from user import forms
-from user.forms import CustomAuthenticationForm
+from user.forms import CustomAuthenticationForm, RegisterModelForm
 from user.models import Users
+from utils.random_code import get_random_code
+from django.forms import ValidationError
+from django.core.mail import send_mail
 
 
 class RegisterView(CreateView):
@@ -44,8 +43,6 @@ class UserLoginView(LoginView):
 
     def form_invalid(self, form):
         return JsonResponse({'success': False, 'errors': form.errors})
-<<<<<<< Updated upstream
-=======
 
 
 def user_logout(request):
@@ -89,4 +86,3 @@ class SendCode(View):
 
 class UserDetail(DetailView):
     pass
->>>>>>> Stashed changes

@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django_redis import get_redis_connection
 
 from user.models import Users
 
@@ -16,6 +17,7 @@ class BootStrapForm:
 
 class RegisterModelForm(BootStrapForm, UserCreationForm):
     email = forms.EmailField(label='邮箱', required=True)
+    code = forms.CharField(label='验证码', max_length=6)
 
     password1 = forms.CharField(widget=forms.PasswordInput, label='密码',
                                 min_length=8, max_length=20,
@@ -26,7 +28,7 @@ class RegisterModelForm(BootStrapForm, UserCreationForm):
 
     class Meta:
         model = Users
-        fields = ['username', 'email', 'password1', 'password2']
+        fields = ['username', 'email', 'code', 'password1', 'password2']
 
     def clean_username(self):
         username = self.cleaned_data.get('username')
@@ -37,6 +39,16 @@ class RegisterModelForm(BootStrapForm, UserCreationForm):
         if Users.objects.filter(email=email).exists():
             raise forms.ValidationError('邮箱已被注册!')
         return email
+
+    def clean_code(self):
+        email = self.cleaned_data.get('email')
+        code = self.cleaned_data.get('code')
+        redis_conn = get_redis_connection("default")
+        redis_code = redis_conn.get(email).decode()
+        if code != redis_code:
+            raise forms.ValidationError('验证码错误')
+        else:
+            redis_conn.delete(email)
 
 
 class CustomAuthenticationForm(BootStrapForm, AuthenticationForm):

@@ -8,19 +8,13 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Blog</title>
     <link rel="stylesheet" href="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css' %}">
-<<<<<<< Updated upstream
-
-=======
     <link rel="stylesheet" href="{% static 'plugin/fontawesome-free-6.4.0-web/css/all.css' %}">
     <script src="{% static 'plugin/jquery-3.4.1/jquery-3.4.1.min.js' %}"></script>
     <script src="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js' %}"></script>
->>>>>>> Stashed changes
     <style>
         body {
             background: linear-gradient(to right, #f4f4f4, white);
         }
-<<<<<<< Updated upstream
-=======
 
         a {
             text-decoration: none;
@@ -43,7 +37,6 @@
         .nav-item.dropdown .nav-link.dropdown-toggle::after {
             display: none;
         }
->>>>>>> Stashed changes
     </style>
     {% block css %}
 
@@ -88,15 +81,8 @@
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
 
+
             <ul class="navbar-nav">
-<<<<<<< Updated upstream
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'login' %}">登 录</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'register' %}">注 册</a>
-                </li>
-=======
                 {% if request.user.is_authenticated %}
                     <li class="nav-item dropdown">
                         <!-- 如果用户有头像，显示头像。否则显示首字母作为代替 -->
@@ -127,7 +113,6 @@
                         <a class="nav-link active" aria-current="page" href="{% url 'register' %}">注 册</a>
                     </li>
                 {% endif %}
->>>>>>> Stashed changes
             </ul>
 
         </div>
@@ -137,7 +122,7 @@
 
 {% endblock %}
 
-<script src="{% static 'plugin/jquery-3.4.1/jquery-3.4.1.min.js' %}"></script>
+
 {% block js %}
 
 {% endblock %}
