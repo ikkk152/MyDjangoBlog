@@ -36,6 +36,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'user',
+    'article',
+
 ]
 
 MIDDLEWARE = [
@@ -142,3 +144,18 @@ AUTH_USER_MODEL = 'user.Users'
 
 # 自定义用户认证
 AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
+
+# 配置用于发送邮件的邮箱
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = True  # 是否使用TLS安全传输协议(用于在两个通信应用程序之间提供保密性和数据完整性)
+EMAIL_USE_SSL = False  # 是否使用SSL加密，qq企业邮箱要求使用，163邮箱设置为True的时候会报ssl的错误
+EMAIL_HOST = 'smtp.163.com'  # 发送邮件的邮箱的SMTP服务器，这里用的是163邮箱
+EMAIL_PORT = 25  # 发件箱的SMTP服务器端口，默认是25
+EMAIL_HOST_USER = 'test@163.com'  # 发送邮件的邮箱地址
+EMAIL_HOST_PASSWORD = '准备工作获取的授权码'  # 发送邮件的邮箱密码(这里使用的是授权码)
+
+CODE_EXPIRE_MINUTE = 3
+try:
+    from .local_settings import *
+except ImportError:
+    print('缺失本地配置文件local_settings.py')
