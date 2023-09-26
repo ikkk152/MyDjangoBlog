@@ -8,11 +8,42 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Blog</title>
     <link rel="stylesheet" href="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/css/bootstrap.min.css' %}">
+<<<<<<< Updated upstream
 
+=======
+    <link rel="stylesheet" href="{% static 'plugin/fontawesome-free-6.4.0-web/css/all.css' %}">
+    <script src="{% static 'plugin/jquery-3.4.1/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'plugin/bootstrap-5.3.0-alpha1-dist/js/bootstrap.bundle.min.js' %}"></script>
+>>>>>>> Stashed changes
     <style>
         body {
             background: linear-gradient(to right, #f4f4f4, white);
         }
+<<<<<<< Updated upstream
+=======
+
+        a {
+            text-decoration: none;
+        }
+
+        .avatar {
+            width: 35px; /* 调整为所需的大小 */
+            height: 35px;
+            border-radius: 50%; /* 使其成为圆形 */
+            background-color: #007bff; /* 选择一个合适的背景颜色 */
+            color: white; /* 字体颜色 */
+            display: flex; /* 以下几行是为了居中昵称的第一个字母 */
+            justify-content: center;
+            align-items: center;
+            font-weight: bold; /* 加粗字母 */
+            font-size: 1.2em; /* 调整字母的大小 */
+        }
+
+        .nav-item.dropdown .nav-link.dropdown-toggle::before,
+        .nav-item.dropdown .nav-link.dropdown-toggle::after {
+            display: none;
+        }
+>>>>>>> Stashed changes
     </style>
     {% block css %}
 
@@ -58,12 +89,45 @@
             </form>
 
             <ul class="navbar-nav">
+<<<<<<< Updated upstream
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'login' %}">登 录</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{% url 'register' %}">注 册</a>
                 </li>
+=======
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item dropdown">
+                        <!-- 如果用户有头像，显示头像。否则显示首字母作为代替 -->
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
+                            {% if request.user.avatar %}
+                                <img src="{{ request.user.avatar }}" alt="{{ request.user.username }}"
+                                     class="avatar">
+                            {% else %}
+                                <div class="avatar">{{ request.user.username|upper|first }}</div>
+                            {% endif %}
+                        </a>
+                        <!-- 下拉菜单内容 -->
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="{% url 'logout' %}">退出登录</a></li>
+                        </ul>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">登 录</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'register' %}">注 册</a>
+                    </li>
+                {% endif %}
+>>>>>>> Stashed changes
             </ul>
 
         </div>
