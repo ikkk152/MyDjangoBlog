@@ -1,13 +1,74 @@
 {% extends 'layout/base.html' %}
-
+{% load static %}
 {% block css %}
+    <style>
 
+    </style>
 {% endblock %}
 
 {% block content %}
-    
+    <form id="articleForm" action="">
+        {{ form.media }}
+        {% for field in form %}
+            <div class="fieldWrapper">
+                {{ field.label_tag }} {{ field }}
+                <span class="error">{{ field.errors.0 }}</span>
+            </div>
+        {% endfor %}
+        <button id="btnSubmit" class="btn btn-primary mb-3">提 交</button>
+    </form>
+
 {% endblock %}
 
 {% block js %}
+    <script>
+        function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
 
+        $(function () {
+            bindClickBtnSubmit();
+        })
+
+        function bindClickBtnSubmit() {
+            $('#btnSubmit').click(function () {
+                event.preventDefault();
+                $('.error').empty()
+                $.ajax({
+                    data: $('#articleForm').serializeArray(),
+                    dataType: "JSON",
+                    type: "POST",
+                    url: '/article/create/',
+                    headers: {
+                        "X-CSRFToken": getCookie("csrftoken")
+                    },
+                    success: function (res) {
+                        if (res.success) {
+                            location.href = '/'
+                        } else {
+                            $.each(res.errors, function (key, value) {
+                                if (key === "content") {
+                                    $('#id_content-wmd-wrapper').nextAll('.error').first().text(value)
+                                } else {
+                                    $('#id_' + key).nextAll('.error').first().text(value)
+                                }
+                            })
+                        }
+                    }
+                })
+            })
+        }
+    </script>
 {% endblock %}

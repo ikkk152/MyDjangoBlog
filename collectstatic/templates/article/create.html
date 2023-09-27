@@ -1,0 +1,27 @@
+{% extends 'layout/base.html' %}
+{% block css %}
+
+{% endblock %}
+
+{% block content %}
+    {% for field in form %}
+        {% if field.name == 'content' %}
+            <div class="fieldWrapper">
+                {{ field.label_tag }} <p>{{ field }}</p>
+                <span class="error">{{ field.errors.0 }}</span>
+            </div>
+        {% else %}
+            <div class="fieldWrapper">
+                {{ field.label_tag }} {{ field }}
+                <span class="error">{{ field.errors.0 }}</span>
+            </div>
+        {% endif %}
+
+
+    {% endfor %}
+
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}
