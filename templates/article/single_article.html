@@ -1,0 +1,31 @@
+<div class="blog">
+    <h4><a href="#">{{ article.title }}</a></h4>
+    <div class="user">
+        <a href="{% url 'user_detail' article.user.id %}">
+            {% if article.user.avatar %}
+                <img src="{{ article.user.avatar }}" alt="{{ request.user.username }}">
+            {% else %}
+                <div class="avatar">
+                    {{ article.user.username|upper|first }}
+                </div>
+            {% endif %}
+        </a>
+        <button type="button" class="follow btn btn-outline-danger">关注</button>
+        <button type="button" class="follow btn btn-outline-secondary">已关注</button>
+    </div>
+
+    <div>
+        {% if article.content|length > 80 %}
+            <p>{{ article.content|slice:80 }}...</p>
+        {% else %}
+            <p>{{ article.get_markdown_content|safe }}</p>
+        {% endif %}
+    </div>
+    <div>
+        <small>
+            <a href="{% url 'user_detail' article.user.id %}">{{ article.user.username }}</a>
+            {{ article.create_datetime }}
+            <i class="fa-solid fa-eye"></i> {{ article.views }}
+        </small>
+    </div>
+</div>

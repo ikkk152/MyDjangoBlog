@@ -1,4 +1,7 @@
+import markdown
 from django.db import models
+from markdownx.models import MarkdownxField
+from mdeditor.fields import MDTextField
 
 from user.models import Users
 
@@ -17,10 +20,19 @@ class Article(CreateDateModel, models.Model):
     )
     user = models.ForeignKey(Users, verbose_name='用户', on_delete=models.CASCADE)
     title = models.CharField('标题', max_length=30)
-    content = models.TextField('正文')
+    # content = models.TextField('正文')
+    content = MDTextField(verbose_name='正文')
+
     last_edit_datetime = models.DateTimeField('最近编辑', null=True, blank=True)
     views = models.PositiveIntegerField('浏览量', default=0)
     status = models.CharField('文章状态', choices=STATUS_CHOICE, max_length=1)
+
+    def get_markdown_content(self):
+        return markdown.markdown(self.content, extensions=[
+            'markdown.extensions.extra',
+            'markdown.extensions.codehilite',
+            'markdown.extensions.toc',
+        ])
 
     class Meta:
         db_table = 'Article'

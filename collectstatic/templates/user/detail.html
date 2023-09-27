@@ -1,0 +1,15 @@
+{% extends 'layout/base.html' %}
+{% block css %}
+
+{% endblock %}
+{% block content %}
+    {{ user.username }}
+    {{ user.biography }}
+    {% for article in article_list %}
+        {% include 'article/single_article.html' %}
+    {% endfor %}
+    {% include 'layout/pagination.html' %}
+{% endblock %}
+{% block js %}
+
+{% endblock %}

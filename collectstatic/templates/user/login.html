@@ -1,0 +1,26 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="center-content">
+        <form id="LoginForm" action="" method="post" class="account">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.label_tag }} {{ field }}
+                    <span class="error">{{ field.errors.0 }}</span>
+                </div>
+            {% endfor %}
+            <button id="btnLogin" class="btn btn-primary mb-3">登 录</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/account/login.js' %}"></script>
+{% endblock %}
+
+

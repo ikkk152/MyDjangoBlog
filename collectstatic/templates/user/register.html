@@ -1,0 +1,25 @@
+{% extends 'layout/base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/account.css' %}">
+{% endblock %}
+
+{% block content %}
+    <div class="center-content">
+        <form id="RegisterForm" action="" method="post" class="account">
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="fieldWrapper">
+                    {{ field.label_tag }} {{ field }}
+                    <span class="error">{{ field.errors.0 }}</span>
+                </div>
+            {% endfor %}
+            <button id="btnRegister" class="btn btn-primary mb-3">注 册</button>
+            <button id="btnSendEmail" class="btn btn-primary mb-3">获取验证码</button>
+        </form>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script src="{% static 'js/account/register.js' %}"></script>
+{% endblock %}
